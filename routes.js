@@ -44,7 +44,5 @@ const requestHandeler = (req, res) => {
     res.end();
 }
 
-//module.exports = requestHandeler;
-
 exports.handler = requestHandeler;
 exports.someTest = 'Some hard code text';
