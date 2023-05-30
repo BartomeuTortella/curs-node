@@ -30,6 +30,7 @@ const requestHandeler = (req, res) => {
             fs.writeFile('message.txt', message, (err) => {
                 res.writeHead(302, { 'Location': '/' });
                 return res.end();
+                
             });
         });
     }
