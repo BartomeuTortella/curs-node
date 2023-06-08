@@ -17,17 +17,23 @@ module.exports = class Cart {
                 cart = JSON.parse(fileContent);
             }
 
-            const existingProduct = cart.products.find(prod => prod.id === id);
+            const existingProductIndex = cart.products.findIndex(prod => prod.id === id);
+            const existingProduct = cart.products[existingProductIndex];
             let updatedProduct;
 
             if (existingProduct) {
                 updatedProduct = { ...existingProduct };
                 updatedProduct.qty = updatedProduct.qty + 1;
-                cart.products = { ...cart.products, updated };
+                cart.products = [...cart.products];
+                cart.products[existingProductIndex] = updatedProduct;
             } else {
                 updatedProduct = { id: id, qty: 1 };
+                cart.products = [...cart.products, updatedProduct]
             }
-            cart.totalPrice = cart.totalPrice + productPrice;
+            cart.totalPrice = cart.totalPrice + +productPrice;
+            fs.writeFile(p, JSON.stringify(cart), err => {
+                console.log(err);
+            });
         });
     }
 
