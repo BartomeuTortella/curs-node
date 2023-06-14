@@ -37,6 +37,7 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
 User.hasOne(Cart);
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
@@ -54,6 +55,9 @@ sequelize
         return Promise.resolve(user);
     })
     .then(user => {
+        return user.createCart();
+    })
+    .then(() => {
         app.listen(3000);
     })
     .catch(err => { console.log(err) });
